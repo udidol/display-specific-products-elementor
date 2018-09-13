@@ -1,6 +1,6 @@
 # Display Specific Products for Elementor Plugin
 ## Introduction
-*Display Specific Products for Elementor*, or DSPE for short, is a Wordpress plugin which acts as an extension for the Elementor Page Builder plugin. The plugin adds a new Widget in the Elementor's edit screen, under the "general" Widgets group. The widget's title in the Elmeentor Widgets list is "Display Specific Products".
+*Display Specific Products for Elementor*, or DSPE for short, is a Wordpress plugin which acts as an extension for the Elementor Page Builder plugin. The plugin adds a new Widget in the Elementor's edit screen, under the "general" Widgets group. The widget's title in the Elementor Widgets list is "Display Specific Products".
 
 DSPE creates a grid of Woocommerce products, displaying the products' featured images and titles. The images and titles are clickable and link to each listing's product page.
 
