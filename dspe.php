@@ -201,10 +201,12 @@ class Udi_DSPE_Widget extends \Elementor\Widget_Base {
 
         <?php
 
-        if ( !empty($settings['products_list']) ) {
+        if ( !empty($settings['products_list'][0]) ) {
             foreach ($settings['products_list'] as $productID) {
                 $product_image = (wp_get_attachment_image_src( get_post_thumbnail_id( intval($productID) ), 'large' ) !== false ) ? wp_get_attachment_image_src( get_post_thumbnail_id( intval($productID) ), 'large' ) : array( esc_url(plugins_url().'/display-specific-products-elementor/img/placeholder.png') );
                 $product_image_url = $product_image[0];
+                $defaultProductTitle = !empty($productID) ? esc_attr( get_the_title($productID) ) : 'Unavailable: No product was chosen';
+
                 ?>
 
                 <div class="udi-dsc-container">
@@ -213,7 +215,7 @@ class Udi_DSPE_Widget extends \Elementor\Widget_Base {
                             <a href="<?php get_permalink( $productID ) ?>"><img src="<?php echo $product_image_url; ?>"></a>
                         </div>
                         <div class="udi-dsc-product-title">
-                            <a href="<?php get_permalink( $productID ) ?>"><?php echo esc_attr( get_the_title($productID) ); ?></a>
+                            <a href="<?php get_permalink( $productID ) ?>"><?php echo $defaultProductTitle; ?></a>
                         </div>
                     </div><!-- /udi-dsc-product -->
                 </div><!-- /udi-dsc-container -->
@@ -256,4 +258,3 @@ class Udi_DSPE_Widget extends \Elementor\Widget_Base {
  */
 \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Udi_DSPE_Widget() );
 //Plugin::instance()->widgets_manager->register_widget( 'Elementor\Udi_DSPE_Widget' );
-
