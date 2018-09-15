@@ -114,6 +114,11 @@ class Udi_DSPE_Widget extends \Elementor\Widget_Base {
             .udi-dsc-container {
                 margin-right: 1%;
             }
+            
+            .rtl .udi-dsc-container {
+                margin-left: 1%;
+                margin-right: 0;
+            }
 
             .elementor-widget-udi_dsc .elementor-widget-container {
                 justify-content: flex-start;
@@ -123,11 +128,21 @@ class Udi_DSPE_Widget extends \Elementor\Widget_Base {
                 .udi-dsc-container {
                     margin-right: 2%;
                 }
+
+                .rtl .udi-dsc-container {
+                    margin-left: 2%;
+                    margin-right: 0;
+                }
             <?php endif; ?>
 
             <?php if ( $products_per_row == 3 ) : ?>
                 .udi-dsc-container {
                     margin-right: 1.5%;
+                }
+
+                .rtl .udi-dsc-container {
+                    margin-left: 1.5%;
+                    margin-right: 0;
                 }
             <?php endif; ?>
 
@@ -135,29 +150,63 @@ class Udi_DSPE_Widget extends \Elementor\Widget_Base {
                 .udi-dsc-container {
                     margin-right: 1.33%;
                 }
+
+                .rtl .udi-dsc-container {
+                    margin-left: 1.33%;
+                    margin-right: 0;
+                }
             <?php endif; ?>
 
             .udi-dsc-container:nth-of-type(<?php echo $products_per_row; ?>n+<?php echo $products_per_row; ?>) {
                 margin-right: 0;
             }
+
+            .rtl .udi-dsc-container:nth-of-type(<?php echo $products_per_row; ?>n+<?php echo $products_per_row; ?>) {
+                margin-left: 0;
+                margin-right: 0;
+            }
         <?php endif; ?>
 
         .udi-dsc-container {
-            width: <?php echo ((100 / $products_per_row)-1); ?>%;
+            width: <?php echo ( $products_per_row == 1 ) ? '100' : ((100 / $products_per_row)-1); ?>%;
+            <?php echo ($products_per_row == 1) ? 'margin: auto;' : ''; ?>
             margin-bottom: 1em;
         }
-        
+
+        <?php if ($products_per_row == 1): ?>
+        .udi-dsc-container img {
+            margin: auto;
+        }
+        <?php endif; ?>
+
         <?php if ($products_per_row > 1): ?>
             @media only screen and (max-width: 800px) {
                 .udi-dsc-container {
                     width: 49%;
                 }
 
-                .udi-dsc-container:nth-of-type(<?php echo $products_per_row; ?>n+<?php echo $products_per_row; ?>) {
+                /* .udi-dsc-container:nth-of-type(<?php echo $products_per_row; ?>n+<?php echo $products_per_row; ?>) {
                     margin-right: 2%;
                 }
 
+                .rtl .udi-dsc-container:nth-of-type(<?php echo $products_per_row; ?>n+<?php echo $products_per_row; ?>) {
+                    margin-left: 2%;
+                    margin-right: 0;
+                } */
+                .udi-dsc-container:nth-of-type(odd) {
+                    margin-right: 2%;
+                }
+
+                .rtl .udi-dsc-container:nth-of-type(odd) {
+                    margin-left: 2%;
+                    margin-right: 0;
+                }
                 .udi-dsc-container:nth-of-type(2n+2) {
+                    margin-right: 0;
+                }
+
+                .rtl .udi-dsc-container:nth-of-type(2n+2) {
+                    margin-left: 0;
                     margin-right: 0;
                 }
             }
@@ -167,36 +216,28 @@ class Udi_DSPE_Widget extends \Elementor\Widget_Base {
                     width: 100%;
                 }
 
+                .udi-dsc-container {
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+
                 .udi-dsc-container:nth-of-type(<?php echo $products_per_row; ?>n+<?php echo $products_per_row; ?>) {
                     margin-right: 0;
                 }
 
+                .rtl .udi-dsc-container:nth-of-type(<?php echo $products_per_row; ?>n+<?php echo $products_per_row; ?>) {
+                    margin-left: 0;
+                }
                 .udi-dsc-container:nth-of-type(2n+2) {
                     margin-right: 0;
                 }
+
+                .rtl .udi-dsc-container:nth-of-type(2n+2) {
+                    margin-left: 0;
+                }
             }
-        <?php endif; ?>
+        <?php endif; ?> /**/
         
-        /* zero left padding on first row element */
-        /* .udi-dsc-container:nth-of-type(<?php echo $products_per_row; ?>n+1) {
-			padding-left: 0.5%;
-            padding-right: 0.5%;
-		} */
-        /* half the left padding on second(!) row element */
-        /* .udi-dsc-container:nth-of-type(<?php echo $products_per_row; ?>n+2) {
-			padding-left: 0.5%;
-            padding-right: 0.5%;
-		} */
-        /* half the right padding on second to last(!) row element */
-        /* .udi-dsc-container:nth-of-type(<?php echo $products_per_row; ?>n+<?php echo $products_per_row-1; ?>) {
-            padding-right: 0.5%;
-            padding-left: 0.5%;
-		} */
-        /* zero right padding on last row element */
-        /* .udi-dsc-container:nth-of-type(<?php echo $products_per_row; ?>n+<?php echo $products_per_row; ?>) {
-			padding-right: 0.5%;
-            padding-left: 0.5%;
-		} */
         </style>
 
         <?php
