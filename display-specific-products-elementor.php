@@ -3,7 +3,7 @@
  * Plugin Name: Display Specific Products for Elementor
  * Description: Adds a widget to the Elementor Page Builder plugin, which displays a selected WooCommerce product's featured image and title.
  * Author: Udi Dollberg
- * Version: 1.0.0
+ * Version: 1.0.2
  *
  * Text Domain: udi_dsc
  *
