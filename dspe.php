@@ -49,7 +49,6 @@ class Udi_DSPE_Widget extends \Elementor\Widget_Base {
                     'type' => \Elementor\Controls_Manager::SELECT2,
                     'multiple' => true,
                     'options' => $dspeProductsArray,
-                    'section' => 'content_section',
                     'default' => [ '' ],
                 ]
             );
@@ -81,11 +80,23 @@ class Udi_DSPE_Widget extends \Elementor\Widget_Base {
                 ]
             );
 
+            $this->add_control(
+                'show_prices',
+                [
+                    'label' => __( 'Show/Hide Product Prices', 'udi_dsc' ),
+                    'type' => \Elementor\Controls_Manager::SWITCHER,
+                    'label_on' => __( 'Show', 'udi_dsc' ),
+                    'label_off' => __( 'Hide', 'udi_dsc' ),
+                    'return_value' => 'yes',
+                    'default' => 'no',
+                ]
+            );
+
         $this->end_controls_section();
 
 	}
 
-	protected function render( $instance = [] ) {
+	protected function render( $instance = [] ) { 
         
         global $dspeProductsArray;
 
@@ -221,18 +232,11 @@ class Udi_DSPE_Widget extends \Elementor\Widget_Base {
                     margin-right: 0;
                 }
 
-                .udi-dsc-container:nth-of-type(<?php echo $products_per_row; ?>n+<?php echo $products_per_row; ?>) {
+                .udi-dsc-container:nth-of-type(<?php echo $products_per_row; ?>n+<?php echo $products_per_row; ?>), .udi-dsc-container:nth-of-type(2n+2) {
                     margin-right: 0;
                 }
 
-                .rtl .udi-dsc-container:nth-of-type(<?php echo $products_per_row; ?>n+<?php echo $products_per_row; ?>) {
-                    margin-left: 0;
-                }
-                .udi-dsc-container:nth-of-type(2n+2) {
-                    margin-right: 0;
-                }
-
-                .rtl .udi-dsc-container:nth-of-type(2n+2) {
+                .rtl .udi-dsc-container:nth-of-type(<?php echo $products_per_row; ?>n+<?php echo $products_per_row; ?>), .rtl .udi-dsc-container:nth-of-type(2n+2) {
                     margin-left: 0;
                 }
             }
@@ -244,20 +248,29 @@ class Udi_DSPE_Widget extends \Elementor\Widget_Base {
 
         if ( !empty($settings['products_list'][0]) ) {
             foreach ($settings['products_list'] as $productID) {
+                
+                $dspe_product = wc_get_product($productID);
+
                 $product_image = (wp_get_attachment_image_src( get_post_thumbnail_id( intval($productID) ), 'large' ) !== false ) ? wp_get_attachment_image_src( get_post_thumbnail_id( intval($productID) ), 'large' ) : array( esc_url(plugins_url().'/display-specific-products-elementor/img/placeholder.png') );
                 $product_image_url = $product_image[0];
                 $defaultProductTitle = !empty($productID) ? esc_attr( get_the_title($productID) ) : 'Unavailable: No product was chosen';
+                $defaultProductRegularPrice = !empty($dspe_product) ? $dspe_product->get_price_html() : '';
 
                 ?>
 
                 <div class="udi-dsc-container">
                     <div class="udi-dsc-product">
                         <div class="udi-dsc-product-image">
-                            <a href="<?php get_permalink( $productID ) ?>"><img src="<?php echo $product_image_url; ?>"></a>
+                            <a href="<?php echo get_permalink( $productID ); ?>"><img src="<?php echo $product_image_url; ?>"></a>
                         </div>
                         <div class="udi-dsc-product-title">
-                            <a href="<?php get_permalink( $productID ) ?>"><?php echo $defaultProductTitle; ?></a>
+                            <a href="<?php echo get_permalink( $productID ); ?>"><?php echo $defaultProductTitle; ?></a>
                         </div>
+                        <?php if ( 'yes' === $settings['show_prices'] ) : ?>
+                            <div class="udi-dsc-product-price">
+                                <span class="udi-dsc-regular-price <?php //echo ( $dspe_product->is_on_sale() ) ? 'udi-dsc-regular-price-crossed' : ''; ?>"><?php echo $defaultProductRegularPrice; ?></span><?php //echo ( $dspe_product->is_on_sale() ) ? '<span class="udi-dsc-sale-price">'.$dspe_product->get_sale_price().'</span>' : ''; ?>
+                            </div>
+                        <?php endif; ?>
                     </div><!-- /udi-dsc-product -->
                 </div><!-- /udi-dsc-container -->
 
