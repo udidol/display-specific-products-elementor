@@ -3,7 +3,7 @@
  * Plugin Name: Display Specific Products for Elementor
  * Description: Adds a widget to the Elementor Page Builder plugin, which displays a selected WooCommerce product's featured image and title.
  * Author: Udi Dollberg
- * Version: 1.0.2
+ * Version: 1.0.3
  *
  * Text Domain: udi_dsc
  *
@@ -172,8 +172,17 @@ class DisplaySpecificProductsElementor {
 		.udi-dsc-product-image {
 			text-align: center;
 		}
-		.udi-dsc-product-title {
+		.udi-dsc-product-title, .udi-dsc-product-price {
 			text-align: center;
+		}
+		
+		.udi-dsc-regular-price-crossed {
+			text-decoration: line-through;
+		}
+
+		.udi-dsc-sale-price {
+			color: red;
+			font-size: 1.2em;
 		}
 
 		.udi-dsc-product-title a {
